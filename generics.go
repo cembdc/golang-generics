@@ -1,13 +1,5 @@
 package main
 
-type List[T any] struct {
-	head, tail *element[T]
-}
-type element[T any] struct {
-	next *element[T]
-	val  T
-}
-
 func Map[T any](input []T, f func(T) T) []T {
 	var result []T
 	for _, v := range input {
@@ -31,4 +23,16 @@ func (lst *List[T]) GetAll() []T {
 		elems = append(elems, e.val)
 	}
 	return elems
+}
+
+func (lst *List[T]) Pull(v T) {
+	var elems List[T]
+	for e := lst.head; e != nil; e = e.next {
+
+		if v != e.val {
+			elems.Push(e.val)
+		}
+	}
+
+	*lst = elems
 }
